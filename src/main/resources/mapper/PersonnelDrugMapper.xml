@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.nursinghomeapplication.mapper.drug.PersonnelDrugMapper">
+
+    <select id="getDetails" resultType="java.util.Map">
+        SELECT
+        n_personnel_drug.id,
+        n_drug.uuid,
+        n_drug.`name`,
+        n_personnel_drug.dose,
+        n_drug.warning
+        FROM
+        n_personnel
+        INNER JOIN
+        n_personnel_drug
+        ON
+        n_personnel.id = n_personnel_drug.personnel_id
+        INNER JOIN
+        n_drug
+        ON
+        n_personnel_drug.drug_id = n_drug.uuid
+        WHERE
+        n_personnel.`status` != 0 AND
+        n_personnel_drug.`status` != 0 AND
+        n_drug.`status` != 0 AND
+        n_personnel.id = #{id}
+    </select>
+</mapper>

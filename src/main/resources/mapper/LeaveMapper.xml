@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.nursinghomeapplication.mapper.LeaveMapper">
+
+    <select id="getAllForUser" resultType="com.example.nursinghomeapplication.mapper.vo.LeaveUser">
+        SELECT
+            n_leave.id,
+            n_leave.identity,
+            n_user.account,
+            n_user.`name`,
+            n_user.phone,
+            n_leave.title,
+            n_leave.start_time as startTime,
+            n_leave.end_time as endTime,
+            n_leave.addresses as address,
+            n_leave.body,
+            n_leave.`status`
+        FROM
+            n_leave
+                INNER JOIN
+            n_user
+            ON
+                n_leave.user_id = n_user.id
+        WHERE
+            n_user.`status` = 1
+    </select>
+</mapper>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.nursinghomeapplication.mapper.personnel.PersonMapper">
+    <select id="getPersonFoodsById" resultType="java.util.Map">
+        SELECT n_personnel_food.dose,
+               n_foods.`name`  AS foodName,
+               n_foods.role    AS fRole,
+               n_foods.warning AS fWaring
+        FROM n_personnel
+                 INNER JOIN
+             n_personnel_food
+             ON
+                 n_personnel.id = n_personnel_food.personnel_id
+                 INNER JOIN
+             n_foods
+             ON
+                 n_personnel_food.foods_id = n_foods.uuid
+        WHERE n_personnel.`status` = 1
+          AND n_personnel_food.`status` = 1
+          AND n_foods.`status` = 1
+          AND n_personnel.id = #{id}
+    </select>
+    <select id="getPersonDrudsById" resultType="java.util.Map">
+        SELECT
+            n_personnel_drug.dose AS dDose,
+            n_drug.`name` AS dName,
+            n_drug.role AS dRole,
+            n_drug.warning AS dWarning
+        FROM
+            n_personnel
+                INNER JOIN
+            n_personnel_drug
+            ON
+                n_personnel.id = n_personnel_drug.personnel_id
+                INNER JOIN
+            n_drug
+            ON
+                n_personnel_drug.drug_id = n_drug.uuid
+        WHERE
+            n_personnel.`status` = 1 AND
+            n_personnel_drug.`status` = 1 AND
+            n_drug.`status` = 1 AND
+            n_personnel.id = #{id}
+    </select>
+    <select id="getPersonnelUser" resultType="java.util.Map">
+        SELECT
+            n_personnel.id
+        FROM
+            n_personnel
+                INNER JOIN
+            n_user
+            ON
+                n_personnel.user_id = n_user.id
+        WHERE
+            n_user.id = 1
+    </select>
+</mapper>

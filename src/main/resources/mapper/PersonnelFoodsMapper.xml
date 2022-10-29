@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.nursinghomeapplication.mapper.food.PersonnelFoodsMapper">
+
+    <select id="getFoodList" resultType="java.util.Map">
+        SELECT
+            n_personnel_food.id,
+            n_personnel_food.dose,
+            n_foods.warning,
+            n_foods.uuid,
+            n_foods.`name`
+        FROM
+            n_personnel_food
+                INNER JOIN
+            n_foods
+            ON
+                n_personnel_food.foods_id = n_foods.uuid
+                INNER JOIN
+            n_personnel
+            ON
+                n_personnel_food.personnel_id = n_personnel.id
+        WHERE
+            n_personnel.id = #{id} AND n_personnel_food.status = 1
+    </select>
+</mapper>

@@ -1,0 +1,1 @@
+com.gf.driving_school.system.util.CronDelImage.del = */10 * * * * *

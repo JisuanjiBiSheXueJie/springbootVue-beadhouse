@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.nursinghomeapplication.mapper.InfoCenterMapper">
+
+    <select id="getNews" resultType="com.example.nursinghomeapplication.entity.News">
+        SELECT
+            n_news.id,
+            n_news.title,
+            n_news.body,
+            n_news.hot_num,
+            n_news.`status`,
+            n_news.create_user,
+            n_news.create_time,
+            n_news.modified_user,
+            n_news.modified_time,
+            n_news_type.type_name as type
+        FROM
+            n_news
+                INNER JOIN
+            n_news_type
+            ON
+                n_news.type = n_news_type.type_id
+        WHERE
+            n_news.`status` > 0
+    </select>
+    <select id="getNewsIsAdmin" resultType="map">
+        SELECT
+            n_news.id,
+            n_news.title,
+            n_news.body,
+            n_news.hot_num,
+            n_news.`status`,
+            n_news.create_user,
+            n_news.create_time,
+            n_news.modified_user,
+            n_news.modified_time,
+            n_news_type.type_name as type
+        FROM
+            n_news
+                INNER JOIN
+            n_news_type
+            ON
+                n_news.type = n_news_type.type_id
+        WHERE
+            n_news.`status` >= 0
+    </select>
+    <select id="getVersion" resultType="string">
+        SELECT VERSION()
+    </select>
+</mapper>
